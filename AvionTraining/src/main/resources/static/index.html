@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Avion Airlines</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background-color: white;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            color: #555;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Avion Airline Hangar Management</h1>
+        <h3>Sky is the only limit</h3>
+
+        <div class="form-group">
+            <label for="fdestination">Search Flights by Destination:</label>
+            <input type="text" id="fdestination" placeholder="Enter destination">
+            <button onclick="searchFlights()">Search</button>
+        </div>
+
+        <div class="result" id="searchResult"></div>
+
+        <h2>Create a New Flight</h2>
+        <div class="form-group">
+            <label for="forigin">Origin:</label>
+            <input type="text" id="forigin" placeholder="Enter origin">
+        </div>
+
+        <div class="form-group">
+            <label for="flayover">Layover:</label>
+            <input type="text" id="flayover" placeholder="Enter layover">
+        </div>
+
+        <div class="form-group">
+            <label for="fdestination_create">Destination:</label>
+            <input type="text" id="fdestination_create" placeholder="Enter destination">
+        </div>
+
+        <div class="form-group">
+            <label for="fdistance">Distance (in miles):</label>
+            <input type="text" id="fdistance" placeholder="Enter distance">
+        </div>
+
+        <div class="form-group">
+            <label for="ffuel">Fuel (in gallons):</label>
+            <input type="text" id="ffuel" placeholder="Enter fuel">
+        </div>
+
+        <div class="form-group">
+            <label for="fcraft">Aircraft Type:</label>
+            <input type="text" id="fcraft" placeholder="Enter aircraft type">
+        </div>
+
+        <div class="form-group">
+            <label for="fintime">Departure Time:</label>
+            <input type="text" id="fintime" placeholder="Enter departure time">
+        </div>
+
+        <div class="form-group">
+            <label for="fouttime">Arrival Time:</label>
+            <input type="text" id="fouttime" placeholder="Enter arrival time">
+        </div>
+
+        <button onclick="createFlight()">Create Flight</button>
+        <div class="result" id="createResult"></div>
+
+        <h2>Update a Flight</h2>
+        <div class="form-group">
+            <label for="updateFid">Flight ID (to update):</label>
+            <input type="text" id="updateFid" placeholder="Enter Flight ID">
+        </div>
+        <div class="form-group">
+            <label for="updateForigin">New Origin:</label>
+            <input type="text" id="updateForigin" placeholder="Enter new origin">
+        </div>
+        <div class="form-group">
+            <label for "updateFlayover">New Layover:</label>
+            <input type="text" id="updateFlayover" placeholder="Enter new layover">
+        </div>
+        <div class="form-group">
+            <label for="updateFdestination">New Destination:</label>
+            <input type="text" id="updateFdestination" placeholder="Enter new destination">
+        </div>
+        <div class="form-group">
+            <label for="updateFdistance">New Distance (in miles):</label>
+            <input type="text" id="updateFdistance" placeholder="Enter new distance">
+        </div>
+        <div class="form-group">
+            <label for="updateFfuel">New Fuel (in gallons):</label>
+            <input type="text" id="updateFfuel" placeholder="Enter new fuel">
+        </div>
+        <div class="form-group">
+            <label for="updateFcraft">New Aircraft Type:</label>
+            <input type="text" id="updateFcraft" placeholder="Enter new aircraft type">
+        </div>
+        <div class="form-group">
+            <label for="updateFintime">New Departure Time:</label>
+            <input type="text" id="updateFintime" placeholder="Enter new departure time">
+        </div>
+        <div class="form-group">
+            <label for="updateFouttime">New Arrival Time:</label>
+            <input type="text" id="updateFouttime" placeholder="Enter new arrival time">
+        </div>
+        <button onclick="updateFlight()">Update Flight</button>
+        <div class="result" id="updateResult"></div>
+
+        <h2>Delete a Flight</h2>
+        <div class="form-group">
+            <label for="deleteFid">Flight ID (to delete):</label>
+            <input type="text" id="deleteFid" placeholder="Enter Flight ID">
+        </div>
+        <button onclick="deleteFlight()">Delete Flight</button>
+        <div class="result" id="deleteResult"></div>
+    </div>
+    <div class="container">
+        <h2>Get All Flights</h2>
+        <button onclick="getAllFlights()">Get All Flights</button>
+        <div class="result" id="allFlightsResult"></div>
+    </div>
+
+    <script>
+        function searchFlights() {
+            const fdestination = document.getElementById("fdestination").value;
+            fetch(`/upi/avion/destination?fdestination=${fdestination}`)
+                .then(response => response.json())
+                .then(data => {
+                    displaySearchResults(data);
+                });
+        }
+
+        function createFlight() {
+            const avionData = {
+                forigin: document.getElementById("forigin").value,
+                flayover: document.getElementById("flayover").value,
+                fdestination: document.getElementById("fdestination_create").value,
+                fdistance: parseFloat(document.getElementById("fdistance").value),
+                ffuel: parseFloat(document.getElementById("ffuel").value),
+                fcraft: document.getElementById("fcraft").value,
+                fintime: document.getElementById("fintime").value,
+                fouttime: document.getElementById("fouttime").value
+            };
+
+            fetch('/upi/avion', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(avionData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    displayCreateResult(data.message);
+                });
+        }
+
+        function displaySearchResults(data) {
+            const resultDiv = document.getElementById("searchResult");
+            resultDiv.innerHTML = ""; // Clear previous results
+
+            if (data.length === 0) {
+                resultDiv.innerHTML = "No flights found.";
+                return;
+            }
+
+            const table = document.createElement("table");
+            const headerRow = table.insertRow();
+            const columnLabels = ["Flight Origin", "Layover", "Flight Destination", "Distance", "Fuel", "Aircraft Type", "Departure Time", "Arrival Time"];
+
+            for (const label of columnLabels) {
+                const th = document.createElement("th");
+                th.textContent = label;
+                headerRow.appendChild(th);
+            }
+
+            for (const item of data) {
+                const row = table.insertRow();
+                row.insertCell().textContent = item.forigin;
+                row.insertCell().textContent = item.flayover;
+                row.insertCell().textContent = item.fdestination;
+                row.insertCell().textContent = item.fdistance;
+                row.insertCell().textContent = item.ffuel;
+                row.insertCell().textContent = item.fcraft;
+                row.insertCell().textContent = item.fintime;
+                row.insertCell().textContent = item.fouttime;
+            }
+
+            resultDiv.appendChild(table);
+        }
+
+        function displayCreateResult(message) {
+            const createResultDiv = document.getElementById("createResult");
+            createResultDiv.innerHTML = message;
+        }
+
+        function updateFlight() {
+            const fid = document.getElementById("updateFid").value;
+            const avionData = {
+                forigin: document.getElementById("updateForigin").value,
+                flayover: document.getElementById("updateFlayover").value,
+                fdestination: document.getElementById("updateFdestination").value,
+                fdistance: parseFloat(document.getElementById("updateFdistance").value),
+                ffuel: parseFloat(document.getElementById("updateFfuel").value),
+                fcraft: document.getElementById("updateFcraft").value,
+                fintime: document.getElementById("updateFintime").value,
+                fouttime: document.getElementById("updateFouttime").value
+            };
+
+            fetch(`/upi/avion/${fid}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(avionData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    displayUpdateResult(data.message);
+                });
+        }
+
+        function deleteFlight() {
+            const fid = document.getElementById("deleteFid").value;
+
+            fetch(`/upi/avion/${fid}`, {
+                method: 'DELETE'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    displayDeleteResult(data.message);
+                });
+        }
+
+        function displayDeleteResult(message) {
+            const deleteResultDiv = document.getElementById("deleteResult");
+            deleteResultDiv.innerHTML = message;
+        }
+
+        function displayUpdateResult(message) {
+            const updateResultDiv = document.getElementById("updateResult");
+            updateResultDiv.innerHTML = message;
+        }
+
+        function getAllFlights() {
+            fetch('/upi/avion/all')
+                .then(response => response.json())
+                .then(data => {
+                    displayAllFlights(data);
+                });
+        }
+
+        function displayAllFlights(data) {
+            const resultDiv = document.getElementById("allFlightsResult");
+            resultDiv.innerHTML = ""; // Clear previous results
+
+            if (data.length === 0) {
+                resultDiv.innerHTML = "No flights found.";
+                return;
+            }
+
+            const table = document.createElement("table");
+            const headerRow = table.insertRow();
+            const columnLabels = ["Flight Origin", "Layover", "Flight Destination", "Distance", "Fuel", "Aircraft Type", "Departure Time", "Arrival Time"];
+
+            for (const label of columnLabels) {
+                const th = document.createElement("th");
+                th.textContent = label;
+                headerRow.appendChild(th);
+            }
+
+            for (const item of data) {
+                const row = table.insertRow();
+                row.insertCell().textContent = item.forigin;
+                row.insertCell().textContent = item.flayover;
+                row.insertCell().textContent = item.fdestination;
+                row.insertCell().textContent = item.fdistance;
+                row.insertCell().textContent = item.ffuel;
+                row.insertCell().textContent = item.fcraft;
+                row.insertCell().textContent = item.fintime;
+                row.insertCell().textContent = item.fouttime;
+            }
+
+            resultDiv.appendChild(table);
+        }
+    </script>
+</body>
+</html>
