@@ -1,77 +1,83 @@
-# Avion: Hangar Management Application
+# Avion Hangar Management App - Setup Guide
 
-## Overview
+Welcome to the setup guide for Avion, a hangar management application. This document will walk you through the steps necessary to get Avion up and running on your system.
 
-Welcome to the Avion Hangar Management App repository. Avion is a robust and user-friendly application designed for efficient tracking and management of flight data associated with hangars. It offers a comprehensive view of various flight details, empowering hangar operators to maintain and manage flight records seamlessly.
+## Table of Contents
+1. [Prerequisites](#prerequisites)
+2. [Backend Setup](#backend-setup)
+3. [Frontend Setup](#frontend-setup)
+4. [Database Setup](#database-setup)
+5. [Running the Application](#running-the-application)
 
-### Key Features:
-- **Flight Data Visualization**: Avion enables users to view detailed data of all flights that have used their hangar. This includes:
-  - Origin
-  - Layover
-  - Destination
-  - Distance
-  - Fuel Usage
-  - Aircraft Model
-  - In-Time and Out-Time
-  
-  All this information is presented in an easily navigable tabular format.
-
-- **Data Management**: Users have the flexibility to update or delete individual flight records directly from the table. This functionality is enhanced with intuitive action buttons for a seamless experience.
-
-- **Record Creation**: Alongside managing existing records, users can also add new flight records on the same page, ensuring a cohesive and uninterrupted workflow.
-
-## Technologies Used
-- **Backend**: Spring Boot
-- **Database**: MySQL
-- **Frontend**: React with Vite as the build tool
-- **HTTP Client**: Axios Library
-
-## Getting Started
-
-### Prerequisites
+## Prerequisites
+Before you begin, ensure you have the following installed on your system:
 - JDK 11 or later
 - MySQL Server
 - Node.js
-- Spring Tool Suit 4 (For an Easier Setup)
 
-### Installation
+## Backend Setup
+Avion's backend is built with Spring Boot. Follow these steps to set it up:
+
 1. **Clone the Repository**:
-   ```sh
+   ```
    git clone https://github.com/[your-username]/avion.git
    ```
-2. **Set up the Backend**:
-   - Navigate to the backend directory.
-   - Configure your MySQL database settings.
-   - Run the Spring Boot application.
+2. **Navigate to the Backend Directory**:
+   ```
+   cd avion/backend
+   ```
+3. **Configure MySQL Database**:
+   - Start your MySQL server.
+   - Create a new database named `avion_db`.
+   - Update the `application.properties` file with your MySQL username and password.
 
-3. **Set up the Frontend**:
-   - Navigate to the frontend directory.
-   - Install dependencies:
-     ```sh
-     npm install
+4. **Build and Run the Backend**:
+   - Use Maven to build the project:
      ```
-   - Start the React application:
-     ```sh
-     npm start
+     ./mvnw clean install
+     ```
+   - Run the Spring Boot application ( AvionHangarApplication.class ):
+     ```
+     ./mvnw spring-boot:run
      ```
 
-## Usage
+## Frontend Setup
+The frontend of Avion is developed using React. To set it up:
 
-Once the application is running, log in with your credentials. You will be presented with the dashboard displaying all flight records in your hangar. Use the action buttons to manage the flight data as per your requirements.
+1. **Navigate to the Frontend Directory**:
+   ```
+   cd AvionTraining\bin\src\main\resources\frontend\avion
+   ```
+2. **Install Dependencies**:
+   ```
+   npm install
+   ```
 
-## Contributing
+## Database Setup
+Setting up the MySQL database is crucial for the application to function properly.
 
-Contributions are what make the open-source community an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+1. **Start MySQL Server**:
+   - Ensure that MySQL server is up and running on your machine.
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+2. **Create Database and Tables**:
+   - The Spring Boot application will automatically create the necessary tables and relationships once it's running and connected to the database.
 
-## License
+## Running the Application
 
-Distributed under the MIT License. See `LICENSE` for more information.
+1. **Start the Backend Server**:
+   - Ensure the backend server is running as mentioned in [Backend Setup](#backend-setup).
 
+2. **Start the Frontend Application**:
+   - In the frontend directory, start the React application:
+     ```
+     npm run dev
+     ```
+   - This will launch the application in your default web browser.
 
+3. **Access the Application**:
+   - The application will be accessible at `http://localhost:3000`.
+   - Log in with your credentials to access the dashboard.
 
+## Conclusion
+
+You have successfully set up the Avion Hangar Management App on your system. If you encounter any issues, please refer to the troubleshooting section or contact the support team.
