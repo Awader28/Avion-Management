@@ -8,12 +8,10 @@ import org.avion.user.model.User;
 import org.avion.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 // Define the controller class
+@CrossOrigin("*")
 @RestController
 // Map all requests starting with /login to this controller
 @RequestMapping("/login")
@@ -24,6 +22,7 @@ public class UserLogin {
     private UserRepository userRepository;
 
     // Map POST requests starting with /login/authenticate to this method
+    @CrossOrigin("*")
     @PostMapping("/authenticate")
     // This method takes a User object as input and returns a ResponseEntity object
     public ResponseEntity<String> authenticateUser(@RequestBody User loginRequest) {

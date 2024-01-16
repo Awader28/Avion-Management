@@ -29,7 +29,10 @@
     }
   },
   "include": [
-    "src"
+    "src",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.jsx"
   ],
   "references": [
     {

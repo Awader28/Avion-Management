@@ -66,14 +66,16 @@ const FlightDataTable = () => {
         <>
             <div>
                 <h1 className="text-4xl md:text-6xl font-bold tracking-wide">
-                    Flight Data
+                    Flight Details
                 </h1>
+                
                 <div className="flex justify-end">
                     <Button onClick={addFlight} className="flex items-center gap-4 rouded-lg">
                         <PlusCircle className="p-1" />
                         Add New Flight
                     </Button>
                 </div>
+                <br />
                 
             </div>
 

@@ -8,16 +8,10 @@ import org.avion.user.model.User;
 import org.avion.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 // Define the controller class
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/users") // Map requests to /users to this controller
 public class UserController {
@@ -27,6 +21,7 @@ public class UserController {
     private UserRepository userRepository;
 
     // Endpoint to get all users
+    @CrossOrigin("*")
     @GetMapping("/all")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> allUsers = userRepository.findAll();
@@ -34,6 +29,7 @@ public class UserController {
     }
 
     // Endpoint to add a new user
+    @CrossOrigin("*")
     @PostMapping("/add")
     public ResponseEntity<String> addUser(@RequestBody User user) {
         userRepository.save(user);
@@ -41,6 +37,7 @@ public class UserController {
     }
 
     // Endpoint to get a user by ID
+    @CrossOrigin("*")
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
@@ -48,6 +45,7 @@ public class UserController {
     }
 
     // Endpoint to update a user
+    @CrossOrigin("*")
     @PutMapping("/update/{userId}")
     public ResponseEntity<String> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
         Optional<User> existingUserOptional = userRepository.findById(userId);
@@ -64,6 +62,7 @@ public class UserController {
     }
 
     // Endpoint to delete a user
+    @CrossOrigin("*")
     @DeleteMapping("/delete/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
         if (userRepository.existsById(userId)) {
